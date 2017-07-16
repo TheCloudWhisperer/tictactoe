@@ -249,7 +249,7 @@ def is_game_over():
         for c in ['c1', 'c2', 'c3']:
             l.append(board_template[r][c])
 
-    # Remove duplicates (eg. blanks), and then remove blank (if present)
+    # Removing duplicates (eg. blanks), and then remove blank (if present)
     l = set(l)
     if ' ' in l:
         l.remove(' ')
@@ -261,6 +261,17 @@ def is_game_over():
         print_board(scoreboard)
         print "\n"
         exit(0)
+
+    # Checking if the active player achieved 3 in a row
+    # This is a dictionary with the list of possible combinations
+    combo = {'c1': [['r1', 'c1'], ['r1', 'c2'], ['r1', 'c3'],
+             'c2': [['r2', 'c1'], ['r2', 'c2'], ['r2', 'c3'],
+             'c3': [['r3', 'c1'], ['r3', 'c2'], ['r3', 'c3'],
+             'c4': [['r1', 'c1'], ['r2', 'c1'], ['r3', 'c1'],
+             'c5': [['r1', 'c2'], ['r2', 'c2'], ['r3', 'c2'],
+             'c6': [['r1', 'c3'], ['r2', 'c3'], ['r3', 'c3'],
+             'c7': [['r1', 'c1'], ['r2', 'c2'], ['r3', 'c3'],
+             'c8': [['r3', 'c1'], ['r2', 'c2'], ['r1', 'c3']}
 
     ## If the game is not over, we return false so that the calling function
     #+ can swap the active player's name

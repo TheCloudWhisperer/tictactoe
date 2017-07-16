@@ -9,3 +9,6 @@ Assignment is to create a Tic Tac Toe game in Python.
 This version is quite simple, and I may revisit it at a later stage.
 I have quite a few ideas to improve it, but I am eager to finish the assignment
 and proceed with the course.
+
+TODO List:
+- print scoreboard and template side to side (rather than one below the other)
