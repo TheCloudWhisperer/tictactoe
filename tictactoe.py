@@ -231,6 +231,20 @@ def record_choice(choice):
             active_player = player1
 
 
+def is_winning_combo(list):
+    """
+    This function takes a list as a parameter (the list contains 3
+    objects itself, each object is a list of 2 strings).
+
+    The function then checks in the scoreboard dictionary if the 3
+    positions references by the parameter all contain the same sign
+    (either 'X' or 'O').
+
+    Function returns True if all 3 values are the same, False if they
+    are not.
+    """
+    pass
+
 def is_game_over():
     """
     This function checks in the template if there are any available choices,
@@ -264,14 +278,14 @@ def is_game_over():
 
     # Checking if the active player achieved 3 in a row
     # This is a dictionary with the list of possible combinations
-    combo = {'c1': [['r1', 'c1'], ['r1', 'c2'], ['r1', 'c3'],
-             'c2': [['r2', 'c1'], ['r2', 'c2'], ['r2', 'c3'],
-             'c3': [['r3', 'c1'], ['r3', 'c2'], ['r3', 'c3'],
-             'c4': [['r1', 'c1'], ['r2', 'c1'], ['r3', 'c1'],
-             'c5': [['r1', 'c2'], ['r2', 'c2'], ['r3', 'c2'],
-             'c6': [['r1', 'c3'], ['r2', 'c3'], ['r3', 'c3'],
-             'c7': [['r1', 'c1'], ['r2', 'c2'], ['r3', 'c3'],
-             'c8': [['r3', 'c1'], ['r2', 'c2'], ['r1', 'c3']}
+    combo = {'c1': [['r1', 'c1'], ['r1', 'c2'], ['r1', 'c3']],
+             'c2': [['r2', 'c1'], ['r2', 'c2'], ['r2', 'c3']],
+             'c3': [['r3', 'c1'], ['r3', 'c2'], ['r3', 'c3']],
+             'c4': [['r1', 'c1'], ['r2', 'c1'], ['r3', 'c1']],
+             'c5': [['r1', 'c2'], ['r2', 'c2'], ['r3', 'c2']],
+             'c6': [['r1', 'c3'], ['r2', 'c3'], ['r3', 'c3']],
+             'c7': [['r1', 'c1'], ['r2', 'c2'], ['r3', 'c3']],
+             'c8': [['r3', 'c1'], ['r2', 'c2'], ['r1', 'c3']]}
 
     ## If the game is not over, we return false so that the calling function
     #+ can swap the active player's name
