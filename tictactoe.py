@@ -35,16 +35,6 @@ game_over = False
 """
 Defining functions
 """
-def print_header():
-    """
-    This function prints the "header" for the game: things like the
-    players' names, etc.
-    This should be printed every time the board is displayed, but not
-    before players pick their names, etc.
-    """
-    pass
-
-
 def clear_screen():
     """
     This function clears the screen.
@@ -54,8 +44,8 @@ def clear_screen():
     This should be called after every move (if the move is valid), before
     the board is updated and printed out again.
     """
+
     dummy_var = system(clr_comm)
-    pass
 
 
 def print_odd_line(board,row):
@@ -66,7 +56,7 @@ def print_odd_line(board,row):
     (actual players' moves, or board template) and the key identifying the
     actual row to display the values for (this could be 'r1', 'r2' or 'r3').
     """
-    #global scoreboard
+
     print '\t\t'+board[row]['c1']+'|'+board[row]['c2']+'|'+board[row]['c3']
 
 
@@ -76,6 +66,7 @@ def print_even_line():
     pieces.
     It does not need any input, output is always the same.
     """
+
     print "\t\t-+-+-"
 
 
@@ -87,26 +78,12 @@ def print_board(board):
     It relies on 2 functions to print odd lines (containing the actual players'
     moves) and even lines (decorations).
     """
+
     print_odd_line(board,'r1')
     print_even_line()
     print_odd_line(board,'r2')
     print_even_line()
     print_odd_line(board,'r3')
-
-
-def update_line(pos,value):
-    """
-    This function updates the values in the dictionary:
-    - it takes 2 parameters:
-    -- position: the position on the board that needs updating
-    -- value: the value that needs to be recorded in the defined position (which
-       depends on the player who just made their move)
-    - it checks whether the chosen position is already occupied, in which case
-      the function should exit with some error code
-    -- the error code should be captured by the calling function which should
-       print on screen and request that the same player makes another move
-    """
-    pass
 
 
 def ask_player_name(num):
@@ -119,6 +96,7 @@ def ask_player_name(num):
     offer the player to reset their name - left for future improvement, keeping it
     simple for now.
     """
+
     print "\n\tHello Player #%s" % (num)
 
     if num == 1:
@@ -138,6 +116,7 @@ def is_choice_valid(choice):
     If the choice is still in the dictionary, then it's valid and the function returns
     True. Otherwise the function returns False.
     """
+
     # Create a list with all values in board template
     l = []
     for r in ['r1', 'r2', 'r3']:
@@ -162,6 +141,7 @@ def ask_for_choice():
     Before returning the player's choice, it validates that it is a valid one:
     - is the selected letter one of the available ones?
     """
+
     repeat_loop = True
     clear_screen()
 
@@ -189,6 +169,7 @@ def record_choice(choice):
     a) recording it in the scoreboard dictionary
     b) take the corresponding letter out of the board template dictionary
     """
+
     # We need to make changes to the 2 boards
     global scoreboard
     global board_template
@@ -212,17 +193,11 @@ def record_choice(choice):
                 row = r
                 col = c
 
-    # Debug - this could be used later on to confirm the player's choice
-    # print "Row = "+row+"\nCol = "+col
-
     # Recording the player's move in the scoreboard
     scoreboard[row][col] = sign
 
     # Removing the option from the template
     board_template[row][col] = ' '
-
-    # Debug
-    # dummy_var = raw_input("")
 
     if not is_game_over():
         if active_player == player1:
@@ -243,7 +218,18 @@ def is_winning_combo(list):
     Function returns True if all 3 values are the same, False if they
     are not.
     """
-    pass
+
+    if scoreboard[list[0][0]][list[0][1]] == \
+            scoreboard[list[1][0]][list[1][1]] == \
+            scoreboard[list[2][0]][list[2][1]] == 'X':
+        return True
+    elif scoreboard[list[0][0]][list[0][1]] == \
+            scoreboard[list[1][0]][list[1][1]] == \
+            scoreboard[list[2][0]][list[2][1]] == 'O':
+        return True
+    else:
+        return False
+
 
 def is_game_over():
     """
@@ -256,6 +242,7 @@ def is_game_over():
     In case the game is over, it prints the result on the screen and exits
     from the script entirely.
     """
+
     ## First of all we check if all possible moves have always been made.
     #+ This means that all choices have been eliminated from the template.
     l = []
@@ -287,10 +274,19 @@ def is_game_over():
              'c7': [['r1', 'c1'], ['r2', 'c2'], ['r3', 'c3']],
              'c8': [['r3', 'c1'], ['r2', 'c2'], ['r1', 'c3']]}
 
+    for c in ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8']:
+        if is_winning_combo(combo[c]):
+            clear_screen()
+            print "\n\tThe game is over!\n\n" \
+                  "\tPlayer "+active_player+" is the winner!\n\n" \
+                  "\tThis is the final board:\n"
+            print_board(scoreboard)
+            print "\n"
+            exit(0)
+
     ## If the game is not over, we return false so that the calling function
     #+ can swap the active player's name
     return False
-    pass
 
 
 def init_game():
@@ -328,7 +324,6 @@ def init_game():
           "\n\topponent has three in a row or all nine squares are filled.\n"
     dummy_var = raw_input("\n\tPress Enter to set up the game: ")
 
-
     # Let's set up the players' names
     clear_screen()
     player1 = ask_player_name(1)
@@ -351,8 +346,6 @@ def init_game():
           " and use O's\n" % (player1,player2)
     dummy_var = raw_input("\n\tPress Enter to start the game: ")
 
-    pass
-
 
 def main():
     """
@@ -361,6 +354,9 @@ def main():
     ToDo: it would be nice if we asked a player to confirm their move,
           and give them a chance to change it...
     """
+
+    # Calling function to set up the game
+    init_game()
 
     ## We define "game_over" as global because we use it to break out of the
     #+ main loop when we reach an exit condition
@@ -373,28 +369,13 @@ def main():
         # Asking currently active user for their next move
         move = ask_for_choice()
 
-        # Debug
-        """
-        if move == 'a':
-            game_over = True
-        """
-
         # Recording the last move in the scoreboard dictionary
         record_choice(move)
 
-        # Checking if the game is over, and if there is a winner
-        # is_game_over()
-
-    ## When the game is over, we should print out the board and the name of
-    #+ the winner
-
     print "\n\n\tThe game is over!\n"
-    pass
 
 
 ## ---- ---- ----
 
-
-init_game()
 
 main()
